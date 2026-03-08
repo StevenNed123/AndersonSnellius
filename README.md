@@ -20,7 +20,7 @@ The Data has been:
 - Moves are repeated once to boost output signal
 
 ## Simple Heuristics
-Because Snesllius has a bit of trouble at times, it uses a heuristic to stack moves into different priorites. It first checks if a move from the top layer is available then it goes to the second, then the third and so on. About 95% of positions uses the Safe Moves stack (which is filled with moves) so almost all decisions are still made by Snelllius. If there are for example, multiple Checks available Snellius would still pick between one of the Checks.
+Because Snesllius has a bit of trouble at times, it uses a heuristic to stack moves into different priorites. It first checks if a move from the top layer is available then it goes to the second, then the third and so on. About 95% of positions uses the Safe Moves stack (which is usually filled with moves) so almost all decisions are still made by Snelllius. If there are for example, multiple Checks available Snellius would still pick between one of the Checks.
 
 - Mate in one
 - Promotions
