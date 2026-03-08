@@ -1,8 +1,8 @@
-import chess
 import torch
+import chess
 from typing import Optional
 from transformers import AutoTokenizer, AutoModelForCausalLM
-from chess_tournament.players import Player
+from chess_tournament import Player
 
 
 class TransformerPlayer(Player):
@@ -43,14 +43,14 @@ class TransformerPlayer(Player):
 
     def get_move(self, fen: str) -> Optional[str]:
       board = chess.Board(fen)
-      moves = [m.uci() for m in self.get_priority_moves(board)]
-      if not moves:
+      candidate_moves = [m.uci() for m in self.get_candidate_moves(board)]
+      if not candidate_moves:
           return None
 
       best_move = None
       best_score = -float("inf")
 
-      for move in moves:
+      for move in candidate_moves:
           move_score = self.score_move(fen, move)
           if move_score > best_score:
               best_score = move_score
@@ -123,7 +123,7 @@ class TransformerPlayer(Player):
         board.pop()
         return result
 
-    def get_priority_moves(self, board):
+    def get_candidate_moves(self, board):
 
         legal_moves = list(board.legal_moves)
         safe_moves = []
@@ -133,20 +133,20 @@ class TransformerPlayer(Player):
         promotions = []
 
         for move in legal_moves:
+            moving_piece = board.piece_at(move.from_square)
             if move == self.is_checkmate(board):
               return [move]
-            moving_piece = board.piece_at(move.from_square)
-            if move.promotion:
+            elif move.promotion:
                 promotions.append(move)
-            if moving_piece.piece_type == chess.PAWN:
-                pawn_pushes.append(move)
-            if board.is_capture(move):
+            elif board.is_capture(move):
                 captured_piece = board.piece_at(move.to_square)
                 if captured_piece is None:
                     continue
                 if self.PIECE_VALUES[captured_piece.piece_type] > self.PIECE_VALUES[moving_piece.piece_type] or board.attackers(not board.turn, move.to_square) == 0:
                     good_captures.append(move)
             elif not self.leaves_piece_hanging(board, move) and not self.is_stalemate(board, move) and not self.is_threefold(board, move):
+                if moving_piece.piece_type == chess.PAWN:
+                    pawn_pushes.append(move)
                 if board.gives_check(move):
                     checks.append(move)
                 else:
