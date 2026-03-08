@@ -44,9 +44,9 @@ git clone https://github.com/bylinina/chess_exam.git
 cd chess-exam
 pip install -e .
 ```
-An instance of Snellius can be created by running:
+An instance of Snellius can be created by importing player.py and running:
 ```
-AndersonSnellius = TransformerPlayer()
+AndersonSnellius = player.TransformerPlayer()
 ```
 A game between the RandomPlayer from the instructor package and Snellius:
 ```
