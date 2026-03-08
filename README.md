@@ -33,7 +33,7 @@ Training data is a bit sparse especially near the endgame(Defined as: less then 
 
 - Prioritze pawn moves; above Checks but bellow Good Captures
 
-After the correct priority stack has been selected, Snellius is prompted to avaluate a move given the position and returns a Log-Likehood. After avaluating all moves at that stack it will output the one it thinks is the most likely.
+After the correct priority stack has been selected, Snellius is prompted to evaluate a move given the position and returns a Log-Likehood. After evaluating all moves at that stack it will output the one it thinks is the most likely.
 
 ## Running the bot
 
